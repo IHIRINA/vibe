@@ -43,7 +43,7 @@ export const getUserInfoAPI = () => {
 }
 
 // 获取磁贴列表
-export const getTilesAPI = (params?: GetTilesParams) => {
+export const getTilesAPI = (params: number) => {
   return request.get<GetTilesResponse>('/tiles', { params })
 }
 

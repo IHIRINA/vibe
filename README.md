@@ -1,4 +1,4 @@
-## Stick On 
+# Stick On 
 
 ## —— 把生活“贴”在磁贴上，让记忆有条理，让关系更清晰
 
@@ -212,6 +212,180 @@ npx cap open android
 3. 如需使用原生插件，按官方文档在 iOS/Android 工程中手动配置权限与依赖。
 4. 项目默认运行在 `http://localhost:5173`（Vite 默认端口）。
 
-### 运行/部署指南
+# Stick On - Spring Boot 后端工程
 
-前后端均打包成可执行文件，点击执行后访问xx网站即可
+## 项目简介
+
+这是一个基于Spring Boot的后端工程，实现了磁贴编辑、人物管理和AI分析等功能。该工程提供了完整的REST API接口，支持用户注册登录、磁贴管理、人物管理以及AI分析等核心功能。
+
+## 技术栈
+
+- Spring Boot 3.2.0
+- Spring Security
+- Spring Data JPA
+- MySQL
+- Spring AI (OpenAI)
+- Lombok
+
+## 项目结构
+
+```
+src/main/java/com/example/tileapp/
+├── config/          # 配置类
+│   └── SecurityConfig.java  # Spring Security配置
+├── controller/      # 控制器层
+│   ├── AuthController.java  # 用户认证相关接口
+│   ├── TileController.java  # 磁贴管理相关接口
+│   ├── PersonController.java  # 人物管理相关接口
+│   └── AIController.java  # AI相关接口
+├── model/           # 实体类
+│   ├── User.java    # 用户实体
+│   ├── Saying.java  # 语录实体
+│   ├── Tile.java    # 磁贴实体
+│   ├── Person.java  # 人物实体
+│   └── PersonTile.java  # 人物-磁贴关联实体
+├── repository/      # 数据访问层
+│   ├── UserRepository.java
+│   ├── SayingRepository.java
+│   ├── TileRepository.java
+│   ├── PersonRepository.java
+│   └── PersonTileRepository.java
+├── service/         # 服务层
+│   ├── impl/        # 服务实现
+│   │   ├── UserServiceImpl.java
+│   │   ├── TileServiceImpl.java
+│   │   ├── PersonServiceImpl.java
+│   │   └── AIServiceImpl.java
+│   ├── UserService.java
+│   ├── TileService.java
+│   ├── PersonService.java
+│   └── AIService.java
+└── TileAppApplication.java  # 主应用类
+```
+
+## 数据库配置
+
+在`application.properties`文件中配置MySQL数据库连接：
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/tile_app?useSSL=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
+
+## OpenAI配置
+
+在`application.properties`文件中配置OpenAI API密钥：
+
+```properties
+spring.ai.openai.api-key=your-api-key
+spring.ai.openai.chat.model=gpt-3.5-turbo
+spring.ai.openai.chat.temperature=0.7
+```
+
+## 功能模块
+
+### 1. 用户认证
+
+- 用户注册
+- 用户登录
+- 密码更新
+- 个人资料更新
+
+### 2. 磁贴管理
+
+- 创建磁贴
+- 更新磁贴
+- 删除磁贴
+- 获取用户的所有磁贴
+- 获取单个磁贴详情
+
+### 3. 人物管理
+
+- 创建人物
+- 更新人物
+- 删除人物
+- 获取用户的所有人物
+- 获取单个人物详情
+- 为人物添加磁贴
+- 从人物中移除磁贴
+- AI分析人物的磁贴内容
+
+### 4. AI聊天
+
+- 提供AI聊天接口
+
+## API接口文档
+
+### 用户认证
+
+- POST `/auth/register` - 用户注册
+- POST `/auth/login` - 用户登录
+
+### 磁贴管理
+
+- POST `/tiles` - 创建磁贴
+- PUT `/tiles/{tileId}` - 更新磁贴
+- DELETE `/tiles/{tileId}` - 删除磁贴
+- GET `/tiles?userId={userId}` - 获取用户的所有磁贴
+- GET `/tiles/{tileId}` - 获取单个磁贴详情
+
+### 人物管理
+
+- POST `/persons` - 创建人物
+- PUT `/persons/{personId}` - 更新人物
+- DELETE `/persons/{personId}` - 删除人物
+- GET `/persons?userId={userId}` - 获取用户的所有人物
+- GET `/persons/{personId}` - 获取单个人物详情
+- POST `/persons/{personId}/tiles/{tileId}` - 为人物添加磁贴
+- DELETE `/persons/{personId}/tiles/{tileId}` - 从人物中移除磁贴
+- GET `/persons/{personId}/analyze` - AI分析人物的磁贴内容
+
+### AI聊天
+
+- POST `/ai/chat` - AI聊天
+
+## 启动项目
+
+使用以下命令启动项目：
+
+```bash
+mvn spring-boot:run
+```
+
+或者编译打包后运行jar文件：
+
+```bash
+mvn clean package
+java -jar target/tile-app-0.0.1-SNAPSHOT.jar
+```
+
+## 注意事项
+
+1. 确保已安装MySQL数据库并创建了对应的数据库
+2. 配置正确的OpenAI API密钥以使用AI功能
+3. 项目运行在8080端口，可以通过`http://localhost:8080`访问
+
+# 部署指南
+## 一、后端
+1. 安装SDK
+2. 正确连接数据库，配置openai的key
+3. mvn spring-boot:run
+
+## 二、前端 
+1. 配置后端url
+2. 将 dist 目录上传到 Nginx 静态文件目录    
+修改 Nginx 配置         
+3. Android 端部署（原生 App）      
+- 初始化 Capacitor 环境 ：        
+npx cap add android
+
+- 构建前端代码并同步到 Android 工程        
+npm run build        
+npx cap sync android         
+- Android Studio 编译与发布         
+打开 Android 工程：      
+npx cap open android
