@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .cors(withDefaults())  // 启用CORS，使用Spring MVC的CORS配置
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/ai/chat/**", "/tiles/**", "/persons/**", "/sayings/**").permitAll()
+                .requestMatchers("/auth/**", "/ai/chat/**", "/tiles/**", "/persons/**", "/saying").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(withDefaults());

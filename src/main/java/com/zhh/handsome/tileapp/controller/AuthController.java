@@ -77,9 +77,10 @@ public class AuthController {
             response.put("data", Map.of(
                     "id", user.getId(),
                     "username", user.getUsername(),
-                    "nickname", user.getNickname(),
-                    "avatar", user.getAvatar()
+                    "nickname", user.getNickname() != null ? user.getNickname() : "",
+                    "avatar", user.getAvatar() != null ? user.getAvatar() : ""
             ));
+
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(

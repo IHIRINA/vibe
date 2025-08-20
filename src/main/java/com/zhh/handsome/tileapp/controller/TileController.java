@@ -125,7 +125,6 @@ public class TileController {
     public ResponseEntity<?> getTileById(@PathVariable Long tileId) {
         try {
             Tile tile = tileService.getTileById(tileId);
-
             Map<String, Object> response = new HashMap<>();
             response.put("code", 200);
             response.put("msg", "Tile retrieved successfully");
