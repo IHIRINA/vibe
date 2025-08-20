@@ -3,19 +3,16 @@ export interface RegisterForm {
   username: string
   password: string
   nickname: string
-  avatar?: string
 }
 
 // 用户注册响应体
 export interface RegisterResponse {
   code: number
-  msg?: string
+  msg: string
   data: {
     id: number
-    username: string
     nickname: string
-    avatar: string
-    token: string
+    username: string
   }
 }
 
@@ -28,23 +25,20 @@ export interface LoginForm {
 // 用户登录响应体
 export interface LoginResponse {
   code: number
-  msg?: string
+  msg: string
   data: {
+    avatar?: string
     id: number
-    username: string
     nickname: string
-    avatar: string
-    token: string
+    username: string
   }
 }
 
 // 说话响应体
 export interface SayingResponse {
   code: number
-  msg?: string
-  data: {
-    text: string
-  }
+  msg: string
+  data: string
 }
 
 // 用户信息响应体
@@ -74,7 +68,7 @@ export interface Tile {
 // 获取磁贴列表响应体
 export interface GetTilesResponse {
   code: number
-  msg?: string
+  msg: string
   data: Tile[]
 }
 

@@ -169,7 +169,7 @@ const magnetList = ref([
 ])
 
 // 昵称和头像从 Pinia 中获取
-const nickname = computed(() => mainStore.userInfo?.nickname || '昵称')
+const nickname = mainStore.userInfo?.nickname || '未设置昵称'
 const userAvatar = computed(() => mainStore.userInfo?.avatar)
 
 // 控制对话框显示
@@ -191,9 +191,8 @@ const handleMenuSelect = (index: string) => {
 const fetchSaying = async () => {
   try {
     const response = await getSayingAPI()
-    const res: SayingResponse = response.data
-    if (res.code === 200) {
-      slogan.value = res.data.text
+    if (response.data.code === 200) {
+      slogan.value = response.data.data
     }
   } catch (error) {
     console.error('获取每日一句失败:', error)
@@ -321,11 +320,10 @@ const formatDate = (dateString: string) => {
 const fetchTiles = async () => {
   try {
     const response = await getTilesAPI()
-    const res: GetTilesResponse = response.data
-    if (res.code === 200) {
+    if (response.data.code === 200) {
       // 保留前三个示例磁贴，然后添加从API获取的数据
       const exampleTiles = magnetList.value.slice(0, 3)
-      const apiTiles = res.data.map(tile => ({
+      const apiTiles = response.data.data.map(tile => ({
         id: tile.id,
         name: `磁贴 ${tile.id}`,
         content: tile.content,

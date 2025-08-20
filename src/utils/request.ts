@@ -16,12 +16,12 @@ request.interceptors.request.use(
   (config) => {
     // 在发送请求之前做些什么
     // 除了注册接口外，其他接口都需要添加token到请求头
-    if (!config.url?.includes('/register')) {
+/*     if (!config.url?.includes('/auth/register')) {
       const store = useMainStore()
       if (store.userInfo?.token) {
         config.headers.Authorization = `Bearer ${store.userInfo.token}`
       }
-    }
+    } */
     return config
   },
   (error: AxiosError) => {
@@ -34,8 +34,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     // 对响应数据做点什么
-    const { data } = response
-    return data
+    return response
   },
   (error: AxiosError) => {
     // 对响应错误做点什么

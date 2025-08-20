@@ -24,12 +24,12 @@ import type {
 
 // 用户注册
 export const registerAPI = (data: RegisterForm) => {
-  return request.post<RegisterResponse>('/register', data)
+  return request.post<RegisterResponse>('/auth/register', data)
 }
 
 // 用户登录
 export const loginAPI = (data: LoginForm) => {
-  return request.post<LoginResponse>('/login', data)
+  return request.post<LoginResponse>('/auth/login', data)
 }
 
 // 获取每日一句
@@ -63,8 +63,8 @@ export const deleteTileAPI = (tileId: number) => {
 }
 
 // 获取人物列表（含磁贴）
-export const getPersonsAPI = () => {
-  return request.get<GetPersonsResponse>('/persons')
+export const getPersonsAPI = (personId: number) => {
+  return request.get<GetPersonsResponse>(`/persons/${personId}`)
 }
 
 // 修改人物名称

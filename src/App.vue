@@ -3,9 +3,11 @@
 </script>
 
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <RouterView v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" :key="$route.fullPath" />
+    </keep-alive>
+  </RouterView>
 </template>
 
 <style scoped>

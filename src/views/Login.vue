@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { registerAPI, loginAPI } from '../api'
 import type { RegisterForm, LoginForm, RegisterResponse, LoginResponse } from '../api/type'
+import {useMainStore} from '../store/index'
+
+const mainStore = useMainStore()
 
 // 表单数据
 const form = reactive({
@@ -60,9 +63,8 @@ const validateNickname = () => {
 const validateForm = () => {
   validateUsername()
   validatePassword()
-  validateNickname()
   
-  return !errors.username && !errors.password && !errors.nickname
+  return !errors.username && !errors.password 
 }
 
 // 注册方法
@@ -71,21 +73,25 @@ const handleRegister = async () => {
   
   try {
     const response = await registerAPI({
-      username: form.username.trim(),
+      username: form.username,
       password: form.password,
-      nickname: form.nickname.trim()
-    } as RegisterForm)
+      nickname: form.nickname
+    })
+    console.log(response)
     
-    const res: RegisterResponse = response.data
-    if (res.code === 200) {
+    
+    if (response.data.code === 200) {
+      mainStore.setUserInfo({
+        id: response.data.data.id,
+        username: response.data.data.username,
+        nickname: response.data.data.nickname,
+      })
       ElMessage.success('注册成功')
     } else {
-      ElMessage.error(res.msg || '注册失败')
+      ElMessage.error(response.data.msg || '注册失败')
     }
   } catch (error) {
     ElMessage.error('注册失败')
-  }finally {
-    loading.value = false
   }
 }
 
@@ -95,24 +101,27 @@ const handleLogin = async () => {
   if (!validateForm()) return
   
   try {
-    loading.value = true
     const response = await loginAPI({
-      username: form.username.trim(),
+      username: form.username,
       password: form.password
-    } as LoginForm)
+    })
     
-    const res: LoginResponse = response.data
-    if (res.code === 200) {
+    if (response.data.code === 200) {
+      mainStore.setUserInfo({
+        id: response.data.data.id,
+        username: response.data.data.username,
+        nickname: response.data.data.nickname,
+        avatar: response.data.data.avatar,
+      })
+      ElMessage.success('登录成功')
       // 跳转到主页
       router.push('/home')
     } else {
-      ElMessage.error(res.msg || '登录失败')
+      ElMessage.error("falied")
     }
   } catch (error) {
     ElMessage.error('登录失败')
-  } finally {
-    loading.value = false
-  }
+  } 
 }
 </script>
 

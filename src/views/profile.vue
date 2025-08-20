@@ -302,9 +302,8 @@ const handleMenuSelect = (index: string) => {
 const fetchSaying = async () => {
   try {
     const response = await getSayingAPI()
-    const res: SayingResponse = response.data
-    if (res.code === 200) {
-      slogan.value = res.data.text
+    if (response.data.code === 200) {
+      slogan.value = response.data.data
     }
   } catch (error) {
     console.error('获取每日一句失败:', error)
@@ -395,7 +394,6 @@ const confirmAvatarUpdate = () => {
       mainStore.updateAvatar(tempAvatarUrl.value)
       
       // 2. 重置状态并关闭对话框
-      tempAvatarUrl.value = mainStore.userAvatar
       selectedAvatarFile.value = null
       avatarDialogVisible.value = false
       ElMessage.success('头像更新成功')

@@ -6,8 +6,7 @@ interface UserInfo {
   id: number
   username: string
   nickname: string
-  avatar: string
-  token: string
+  avatar?: string
 }
 
 // 创建一个示例store
@@ -51,6 +50,9 @@ export const useMainStore = defineStore('main', () => {
     }
   }
 
+  const setUserInfo = (info: UserInfo) => {
+    userInfo.value = info
+  }
   return {
     // 状态
     count,
@@ -67,7 +69,8 @@ export const useMainStore = defineStore('main', () => {
     updateName,
     updateUserInfo,
     updateNickname,
-    updateAvatar
+    updateAvatar,
+    setUserInfo
   }
 }, {
   persist: true

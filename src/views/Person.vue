@@ -270,9 +270,9 @@ const handleMenuSelect = (index: string) => {
 const fetchSaying = async () => {
   try {
     const response = await getSayingAPI()
-    const res: SayingResponse = response.data
-    if (res.code === 200) {
-      slogan.value = res.data.text
+    console.log(response)
+    if (response.data.code === 200) {
+      slogan.value = response.data.data
     }
   } catch (error) {
     console.error('获取每日一句失败:', error)
