@@ -4,7 +4,7 @@ import { useMainStore } from '../store'
 
 // 创建axios实例
 const request = axios.create({
-  baseURL: 'http://localhost:8080', // 基础URL，设置为 http://localhost:8080
+  baseURL: '101.201.153.254:8080',
   timeout: 10000, // 请求超时时间
   headers: {
     'Content-Type': 'application/json'
