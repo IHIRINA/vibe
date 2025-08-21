@@ -215,6 +215,7 @@ const openAddDialog = () => {
 // 处理新增磁贴
 const handleAddMagnet = async (data: any) => {
   try {
+    
     const response = await createTileAPI({
       content: data.content
     })
@@ -318,8 +319,14 @@ const formatDate = (dateString: string) => {
 
 // 获取磁贴列表
 const fetchTiles = async () => {
+  if (!mainStore.userInfo) {
+    console.error('用户未登录')
+    ElMessage.error('用户未登录')
+    return
+  }
+  
   try {
-    const response = await getTilesAPI()
+    const response = await getTilesAPI(mainStore.userInfo.id)
     if (response.data.code === 200) {
       // 保留前三个示例磁贴，然后添加从API获取的数据
       const exampleTiles = magnetList.value.slice(0, 3)

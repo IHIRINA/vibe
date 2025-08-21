@@ -74,7 +74,6 @@ export interface GetTilesResponse {
 
 // 新增磁贴请求体
 export interface CreateTileForm {
-  id: number
   content: string
 }
 

@@ -282,7 +282,7 @@ const fetchSaying = async () => {
 // 获取人物列表数据
 const fetchPersons = async () => {
   try {
-    const response = await getPersonsAPI()
+    const response = await getPersonsAPI(mainStore.userInfo?.id || 1)
     const res: GetPersonsResponse = response.data
     if (res.code === 200) {
       magnetList.value = res.data

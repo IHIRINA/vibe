@@ -95,7 +95,7 @@ const fetchSaying = async () => {
     const response = await getSayingAPI()
     const res: SayingResponse = response.data
     if (res.code === 200) {
-      slogan.value = res.data.text
+      slogan.value = res.data
     }
   } catch (error) {
     console.error('获取每日一句失败:', error)
